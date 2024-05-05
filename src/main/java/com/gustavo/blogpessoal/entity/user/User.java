@@ -1,5 +1,6 @@
 package com.gustavo.blogpessoal.entity.user;
 
+import com.gustavo.blogpessoal.DTO.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

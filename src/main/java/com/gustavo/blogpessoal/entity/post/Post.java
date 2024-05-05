@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+/*@Entity
 @Table(name = "tb_posts")
 @Getter
 @Setter
@@ -26,4 +26,4 @@ public class Post {
     private String content;
     private String commented;
     private LocalDateTime timeTamp;
-}
+}*/
