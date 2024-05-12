@@ -1,4 +1,6 @@
 package com.gustavo.blogpessoal.DTO;
 
-public record ResponseDTO(String name, String token) {
+import com.gustavo.blogpessoal.entity.user.UserType;
+
+public record ResponseDTO(UserType type, String token) {
 }

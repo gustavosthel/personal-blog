@@ -1,7 +1,9 @@
 package com.gustavo.blogpessoal.service;
 
+import com.gustavo.blogpessoal.DTO.UpdateUserDTO;
 import com.gustavo.blogpessoal.DTO.UserDTO;
 import com.gustavo.blogpessoal.entity.user.User;
+import com.gustavo.blogpessoal.entity.user.UserType;
 import com.gustavo.blogpessoal.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,43 @@ public class UserServices {
     public User createUser(UserDTO userDTO) throws Exception {
         User newUser = new User();
         BeanUtils.copyProperties(userDTO, newUser);
+        newUser.setUserType(userDTO.type());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         saveUserDatabase(newUser);
         return newUser;
     }
 
-    public void updateUser(UserDTO userDTO) throws Exception {
-        User updateUser = new User();
-        BeanUtils.copyProperties(userDTO, updateUser);
-        updateUser.setUsername(userDTO.username());
-        updateUser.setEmail(userDTO.email());
-        saveUserDatabase(updateUser);
+    public User createAdmin(UserDTO userDTO) {
+        Optional<User> existingAdmin = userRepository.findByUserType(UserType.ADMIN);
+        if (existingAdmin.isEmpty()) {
+            User newUser = new User();
+            BeanUtils.copyProperties(userDTO, newUser);
+            newUser.setUserType(userDTO.type());
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            saveUserDatabase(newUser);
+            return newUser;
+        }
+        System.out.println("Admin already exists");
+        return null;
+    }
+
+    public void updateUser(UpdateUserDTO userDTO, User loggedInUser) throws Exception {
+        loggedInUser.setUsername(userDTO.username());
+        loggedInUser.setEmail(userDTO.email());
+        loggedInUser.setPassword(passwordEncoder.encode(userDTO.password()));
+        saveUserDatabase(loggedInUser);
     }
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
-    public void deleteUser(UUID userId) throws Exception {
+    public void deleteUserId(UUID userId) throws Exception {
         this.userRepository.deleteById(userId);
+    }
+
+    public void deleteUser(User loggedInUser) {
+        this.userRepository.delete(loggedInUser);
     }
 
     public void saveUserDatabase(User user) {
