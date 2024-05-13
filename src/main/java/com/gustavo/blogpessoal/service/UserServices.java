@@ -31,17 +31,12 @@ public class UserServices {
     }
 
     public User createAdmin(UserDTO userDTO) {
-        Optional<User> existingAdmin = userRepository.findByUserType(UserType.ADMIN);
-        if (existingAdmin.isEmpty()) {
-            User newUser = new User();
-            BeanUtils.copyProperties(userDTO, newUser);
-            newUser.setUserType(userDTO.type());
-            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-            saveUserDatabase(newUser);
-            return newUser;
-        }
-        System.out.println("Admin already exists");
-        return null;
+        User newUser = new User();
+        BeanUtils.copyProperties(userDTO, newUser);
+        newUser.setUserType(userDTO.type());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        saveUserDatabase(newUser);
+        return newUser;
     }
 
     public void updateUser(UpdateUserDTO userDTO, User loggedInUser) throws Exception {
@@ -69,5 +64,13 @@ public class UserServices {
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findByType(UserType type) {
+        return userRepository.findByUserType(type);
+    }
+
+    public Optional<User> findById(UUID id) {
+        return userRepository.findById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.gustavo.blogpessoal.entity.post;
+/*package com.gustavo.blogpessoal.entity.post;
 
 import com.gustavo.blogpessoal.entity.user.User;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/*@Entity
+@Entity
 @Table(name = "tb_posts")
 @Getter
 @Setter
@@ -24,6 +24,6 @@ public class Post {
     private User user;
     private String title;
     private String content;
-    private String commented;
     private LocalDateTime timeTamp;
+    private String commented;
 }*/
