@@ -46,17 +46,11 @@ public class UserServices {
         saveUserDatabase(loggedInUser);
     }
 
-    public List<User> getAllUsers() {
-        return this.userRepository.findAll();
-    }
+    public List<User> getAllUsers() {return userRepository.findAll();}
 
-    public void deleteUserId(UUID userId) throws Exception {
-        this.userRepository.deleteById(userId);
-    }
+    public void deleteUserId(UUID userId) throws Exception {userRepository.deleteById(userId);}
 
-    public void deleteUser(User loggedInUser) {
-        this.userRepository.delete(loggedInUser);
-    }
+    public void deleteUser(User loggedInUser) {userRepository.delete(loggedInUser);}
 
     public void saveUserDatabase(User user) {
         this.userRepository.save(user);
@@ -66,11 +60,7 @@ public class UserServices {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> findByType(UserType type) {
-        return userRepository.findByUserType(type);
-    }
+    public Optional<User> findByType(UserType type) {return userRepository.findByUserType(type);}
 
-    public Optional<User> findById(UUID id) {
-        return userRepository.findById(id);
-    }
+    public Optional<User> findById(UUID id) {return userRepository.findById(id);}
 }
