@@ -1,4 +1,4 @@
-package com.gustavo.blogpessoal.confg;
+package com.gustavo.blogpessoal.confg.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

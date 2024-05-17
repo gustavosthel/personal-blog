@@ -1,4 +1,4 @@
-package com.gustavo.blogpessoal.confg;
+package com.gustavo.blogpessoal.confg.security;
 
 import com.gustavo.blogpessoal.entity.user.User;
 import com.gustavo.blogpessoal.repository.UserRepository;
@@ -7,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

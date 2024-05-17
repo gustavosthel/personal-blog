@@ -1,5 +1,6 @@
 package com.gustavo.blogpessoal.entity.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gustavo.blogpessoal.entity.user.User;
 import jakarta.persistence.*;
@@ -31,9 +32,10 @@ public class Post {
     private String content;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"post", "commentId"})
+    @JsonIgnoreProperties({"post"})
     private List<Commented> commented;
 }

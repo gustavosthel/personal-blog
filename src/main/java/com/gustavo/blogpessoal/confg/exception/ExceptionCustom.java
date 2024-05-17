@@ -1,4 +1,4 @@
-package com.gustavo.blogpessoal.confg;
+package com.gustavo.blogpessoal.confg.exception;
 
 public class ExceptionCustom {
 
@@ -17,5 +17,19 @@ public class ExceptionCustom {
         }
     }
 
+    public static class PostNotFoundException extends RuntimeException {
+        public PostNotFoundException() {
+        }
+    }
+
+    public static class UserNotAuthorizeException extends RuntimeException {
+        public UserNotAuthorizeException() {
+        }
+    }
+
+    public static class CommentedNotFoundException extends RuntimeException {
+        public CommentedNotFoundException() {
+        }
+    }
 
 }

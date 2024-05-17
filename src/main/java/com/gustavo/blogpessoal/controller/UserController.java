@@ -4,8 +4,8 @@ import com.gustavo.blogpessoal.DTO.LoginDTO;
 import com.gustavo.blogpessoal.DTO.ResponseDTO;
 import com.gustavo.blogpessoal.DTO.UpdateUserDTO;
 import com.gustavo.blogpessoal.DTO.UserDTO;
-import com.gustavo.blogpessoal.confg.ExceptionCustom;
-import com.gustavo.blogpessoal.confg.TokenService;
+import com.gustavo.blogpessoal.confg.exception.ExceptionCustom;
+import com.gustavo.blogpessoal.confg.security.TokenService;
 import com.gustavo.blogpessoal.entity.user.User;
 import com.gustavo.blogpessoal.entity.user.UserType;
 import com.gustavo.blogpessoal.service.UserServices;
@@ -45,13 +45,13 @@ public class UserController {
             if (userServices.findByType(userDTO.type()).isEmpty()) {
                 User newUser = userServices.createAdmin(userDTO);
                 String token = tokenService.generateToken(newUser);
-                return ResponseEntity.ok(new ResponseDTO(newUser.getUserType(), token));
+                return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
             }
             throw new ExceptionCustom.AdminAlreadyExistsException();
         }
         User newUser = userServices.createUser(userDTO);
         String token = tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getUserType(), token));
+        return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
     }
 
     @PostMapping("/login")
@@ -61,7 +61,7 @@ public class UserController {
                 new BadCredentialsException(""));
         if (passwordEncoder.matches(loginDTO.password(), user.getPassword())) {
             String token = tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getUserType(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
         }
         throw new BadCredentialsException("");
     }

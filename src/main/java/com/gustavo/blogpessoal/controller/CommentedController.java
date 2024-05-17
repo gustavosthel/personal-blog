@@ -1,6 +1,7 @@
 package com.gustavo.blogpessoal.controller;
 
 import com.gustavo.blogpessoal.DTO.CommentedDTO;
+import com.gustavo.blogpessoal.confg.exception.ExceptionCustom;
 import com.gustavo.blogpessoal.entity.post.Commented;
 import com.gustavo.blogpessoal.entity.post.Post;
 import com.gustavo.blogpessoal.entity.user.User;
@@ -29,7 +30,7 @@ public class CommentedController {
         Optional<Post> postOptional = postService.findByPostId(id);
 
         if (postOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ExceptionCustom.PostNotFoundException();
         }
 
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -44,11 +45,11 @@ public class CommentedController {
         Optional<Commented> commented = commentedService.findByCommentId(id);
 
         if (commented.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ExceptionCustom.CommentedNotFoundException();
         }
 
         if (!commented.get().getUser().getUserId().equals(loggedInUser.getUserId())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            throw new ExceptionCustom.UserNotAuthorizeException();
         }
 
         commentedService.delete(commented.get());
@@ -61,11 +62,11 @@ public class CommentedController {
         Optional<Commented> commented = commentedService.findByCommentId(id);
 
         if (commented.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ExceptionCustom.CommentedNotFoundException();
         }
 
         if (!commented.get().getPost().getUser().getUserId().equals(loggedInUser.getUserId())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            throw new ExceptionCustom.UserNotAuthorizeException();
         }
 
         commentedService.delete(commented.get());
